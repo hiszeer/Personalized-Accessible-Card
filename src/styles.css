@@ -1,0 +1,120 @@
+:root {
+  --bg: #050a05;
+  --green: #7dff2e;
+  --green-dim: #3d8f12;
+  --line: rgba(125, 255, 46, 0.35);
+  --text: #e8ffe0;
+  --muted: #7fa271;
+  --cut: 14px;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { background: var(--bg); color: var(--text); min-height: 100%; }
+body { font-family: 'Rajdhani', system-ui, sans-serif; font-weight: 600; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; }
+a { color: inherit; text-decoration: none; }
+
+main {
+  min-height: 100svh; display: flex; justify-content: center; align-items: flex-start;
+  padding: max(20px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  position: relative; overflow-x: hidden;
+}
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(125,255,46,.18), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(125,255,46,.08), transparent 55%),
+    linear-gradient(rgba(125,255,46,.05) 1px, transparent 1px) 0 0 / 36px 36px,
+    linear-gradient(90deg, rgba(125,255,46,.05) 1px, transparent 1px) 0 0 / 36px 36px;
+}
+.scan {
+  position: fixed; inset: 0; z-index: 3; pointer-events: none;
+  background: repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px);
+}
+
+.panel {
+  position: relative; z-index: 1; width: 100%; max-width: 440px; padding: 28px 18px 18px;
+  background: linear-gradient(180deg, rgba(14,24,12,.94), rgba(7,12,7,.96));
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 28px 100%, 0 calc(100% - 28px));
+  text-align: center;
+  outline: 1px solid var(--line); outline-offset: -1px;
+}
+
+.avatar {
+  width: 104px; height: 104px; margin: 0 auto 14px; display: grid; place-items: center;
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  background: var(--green); padding: 3px;
+}
+.avatar img, .avatar span {
+  width: 100%; height: 100%; object-fit: cover; display: grid; place-items: center;
+  background: #0b160a; font: 700 42px 'Oxanium'; color: var(--green);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+
+h1 {
+  font: 700 30px 'Oxanium'; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--green); text-shadow: 0 0 14px rgba(125,255,46,.55);
+}
+.tag { margin: 6px 0 20px; color: var(--muted); font-size: 15px; letter-spacing: .06em; display: flex; justify-content: center; align-items: center; gap: 8px; }
+.dot { width: 7px; height: 7px; background: var(--green); border-radius: 50%; box-shadow: 0 0 8px var(--green); animation: blink 1.6s infinite; }
+@keyframes blink { 50% { opacity: .3; } }
+
+.grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+
+.card {
+  position: relative; display: flex; align-items: center; gap: 12px; padding: 12px 14px; text-align: left;
+  background: var(--line); width: 100%;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  transition: transform .15s, background .2s;
+  animation: in .45s both;
+}
+.card::before {
+  content: ''; position: absolute; inset: 1px; z-index: 0; background: #0b140a;
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  transition: background .2s;
+}
+.card > * { position: relative; z-index: 1; }
+.card:hover, .card:focus-visible { background: var(--green); transform: translateY(-2px); outline: 0; }
+.card:hover::before, .card:focus-visible::before { background: linear-gradient(90deg, #14280f, #0b140a); }
+.card:active { transform: scale(.98); }
+@keyframes in { from { opacity: 0; transform: translateY(10px); } }
+
+.icon {
+  width: 38px; height: 38px; flex: none; display: grid; place-items: center; font-size: 17px;
+  color: var(--green); background: rgba(125,255,46,.1);
+  clip-path: polygon(0 0, 80% 0, 100% 20%, 100% 100%, 20% 100%, 0 80%);
+}
+.text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.text b { font-size: 17px; letter-spacing: .05em; text-transform: uppercase; }
+.text small { color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: .04em; }
+.arrow { color: var(--green); opacity: .6; transition: transform .2s; }
+.card:hover .arrow { transform: translateX(4px); opacity: 1; }
+
+.more {
+  margin-top: 10px; width: 100%; padding: 10px; display: flex; gap: 8px; justify-content: center; align-items: center;
+  border: 1px dashed var(--line); color: var(--muted); letter-spacing: .18em; text-transform: uppercase; font-size: 13px;
+  transition: color .2s, border-color .2s;
+}
+.more:hover { color: var(--green); border-color: var(--green); }
+.flip { transform: rotate(180deg); }
+
+.divider { margin: 24px 0 12px; display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12px; letter-spacing: .3em; text-transform: uppercase; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--line), transparent); }
+.tips { grid-template-columns: 1fr 1fr; }
+footer { margin-top: 18px; color: var(--muted); font-size: 12px; letter-spacing: .2em; opacity: .7; }
+
+.modal { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; background: rgba(0,0,0,.8); padding: 20px; }
+.modal-box {
+  position: relative; width: min(340px, 100%); padding: 22px; text-align: center; background: #0b140a;
+  outline: 1px solid var(--green);
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+.modal-box h2 { font: 700 20px 'Oxanium'; letter-spacing: .15em; text-transform: uppercase; color: var(--green); margin-bottom: 14px; }
+.modal-box img { width: 100%; background: #fff; padding: 8px; }
+.close { position: absolute; top: 10px; right: 12px; color: var(--green); font-size: 18px; }
+
+@media (min-width: 720px) {
+  main { align-items: center; }
+  .panel { max-width: 640px; padding: 36px 32px 24px; }
+  .grid:not(.tips) { grid-template-columns: 1fr 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
