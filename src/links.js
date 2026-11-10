@@ -7,7 +7,7 @@ import {
 export const profile = {
   name: "zeer's here!",
   tagline: "Looking to get in touch?",
-  avatar: 'Personalized-Accessible-Card/public/avatar.png',      // put your image in /public/avatar.png
+  avatar: './public/avatar.png',      // put your image in /public/avatar.png
   footer: '© 2026 · zeer',
   visibleCount: 8,             // links shown before "Show more"
 }
